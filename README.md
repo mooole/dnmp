@@ -59,4 +59,4 @@ Docker DNMP 可以构建出基于 Docker 的 PHP 多版本开发环境，其优�
 
 ## License
 
-MIT
+Apache License
