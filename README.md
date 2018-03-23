@@ -9,14 +9,14 @@ Docker DNMP 可以构建出基于 Docker 的 PHP 多版本开发环境，其优�
 
 ##### 版本及组件
 
-* 当前版本：2.0
-* 自带组件：PHP/FPM 5.6、Nginx 1.12.2、Mysql 5.7、Redis 4.0.8
+* 当前版本：2.2
+* 自带组件：PHP/FPM 7.2、PHP/FPM 5.6、Nginx 1.12.2、Mysql 5.7、Redis 4.0.8
 
 ##### 目录结构
 
-    docker_lnmp
+    dnmp
     |----/build                  镜像构建目录
-    |----/databases              数据持久化目录
+    |----/data/mysql             MYSQL数据持久化目录
     |----/conf                   配置持久化目录
     |----/logs                   日志持久化目录
     |----/www                    站点程序持久化目录
@@ -24,14 +24,29 @@ Docker DNMP 可以构建出基于 Docker 的 PHP 多版本开发环境，其优�
 
 #### 开始安装
 
-    git clone 克隆项目
+    #克隆项目
+    git clone https://git.coding.net/mocode/dnmp.git
 
     cd dnmp
 
     # 构建镜像并启动容器，如果某些容器起不来注意检查持久化目录下面的组件目录是否有可写权限
+    mv docker-compose-default.yml docker-compose.yml
     sudo docker-compose up --build -d
+    
+##### 要注意的配置
+
+    在./conf/php56/php.ini 配置支商派恶心的电商系统
+    zend_extension="/usr/local/php56/lib/php/extensions/no-debug-non-zts-20131226/opcache.so"
+    zend_extension="/usr/local/php56/lib/php/extensions/no-debug-non-zts-20131226/ZendGuardLoader.so"
+    zend_loader.enable=1
+    zend_loader.disable_licensing=0
+    zend_loader.obfuscation_level_support=3
+    zend_loader.license_path=''
+    自行配置商派授权文件目录
 
 #### 可能遇到的问题
+    
+    人品不好
 
 ##### 常用操作命令
 
@@ -39,10 +54,10 @@ Docker DNMP 可以构建出基于 Docker 的 PHP 多版本开发环境，其优�
     sudo docker ps
     
     # 启动部分服务在后边加服务名，不加表示启动所有，-d 表示在后台运行
-    sudo docker-compose up [nginx|php56|mysql57|redis] -d
+    sudo docker-compose up [nginx|php72|php56|mysql57|redis] -d
     
     # 停止和启动类似
-    sudo docker-compose stop [nginx|php56|mysql57|redis]
+    sudo docker-compose stop [nginx|php72|php56|mysql57|redis]
 
     # 删除所有未运行的容器
     sudo docker rm $(docker ps -a -q)
