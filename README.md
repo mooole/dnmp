@@ -64,6 +64,9 @@ Docker DNMP 可以构建出基于 Docker 的 PHP 多版本开发环境，其优�
 
     # 删除所有镜像，-f 可以强制删除
     sudo docker rmi $(docker images -q)
+    
+    # 进入指定窗口内部
+    docker exec -it container_name /bin/bash
 
 ##### 修改镜像文件怎么处理？
     
