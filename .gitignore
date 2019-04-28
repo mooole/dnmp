@@ -3,4 +3,3 @@
 /.idea
 !.gitignore
 docker-compose.yml
-/logs

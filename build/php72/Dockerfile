@@ -68,24 +68,5 @@ RUN apt-get install -y libmcrypt-dev libmhash-dev \
 ADD composer.phar /usr/local/bin/composer
 RUN chmod 755 /usr/local/bin/composer
 
-#  NODEJS
-RUN set -eux; \
-    apt-get install -y python; \
-    cd /root/; \
-    wget https://nodejs.org/dist/v8.11.1/node-v8.11.1.tar.gz; \
-    tar xzvf node-v8.11.1.tar.gz; \
-    cd node-v8.11.1; \
-    ./configure --prefix=/usr/local/node; \
-    make && make install
-
-RUN ls -l /usr/local/node/bin/
-RUN ln -s /usr/local/node/bin/node /usr/local/bin/node
-RUN ln -s /usr/local/node/lib/node_modules/npm/bin/npm-cli.js /usr/local/bin/npm
-RUN node -v
-RUN npm -v
-
-RUN npm install -g cnpm --registry=https://registry.npm.taobao.org
-RUN ln -s /usr/local/node/lib/node_modules/cnpm/bin/cnpm /usr/local/bin/cnpm
-
 ADD phpunit-8.1.3.phar /usr/local/bin/phpunit
 RUN chmod 755 /usr/local/bin/phpunit
