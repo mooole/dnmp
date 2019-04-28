@@ -3,3 +3,4 @@
 /.idea
 !.gitignore
 docker-compose.yml
+./build/php72/add_hosts.sh
