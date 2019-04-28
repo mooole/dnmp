@@ -64,16 +64,9 @@ RUN apt-get install -y libmcrypt-dev libmhash-dev \
 	&& pecl install /home/mcrypt.tgz \
 	&& echo "extension=mcrypt.so" > /usr/local/etc/php/conf.d/mcrypt.ini
 
-RUN set -eux; \
-    cd /usr/local/src; \
-    git clone https://github.com/xdebug/xdebug.git; \
-    cd xdebug; \
-    ./rebuild.sh
-
 # php composer
 ADD composer.phar /usr/local/bin/composer
 RUN chmod 755 /usr/local/bin/composer
-RUN composer config -g repo.packagist composer https://packagist.phpcomposer.com
 
 #  NODEJS
 RUN set -eux; \
@@ -93,3 +86,6 @@ RUN npm -v
 
 RUN npm install -g cnpm --registry=https://registry.npm.taobao.org
 RUN ln -s /usr/local/node/lib/node_modules/cnpm/bin/cnpm /usr/local/bin/cnpm
+
+ADD phpunit-8.1.3.phar /usr/local/bin/phpunit
+RUN chmod 755 /usr/local/bin/phpunit
