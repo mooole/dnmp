@@ -70,3 +70,5 @@ RUN chmod 755 /usr/local/bin/composer
 
 ADD phpunit-8.1.3.phar /usr/local/bin/phpunit
 RUN chmod 755 /usr/local/bin/phpunit
+
+# COPY add_hosts.sh /root/
