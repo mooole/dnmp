@@ -1,4 +1,4 @@
-FROM redis:4.0.8
+FROM redis:5.0.7
 
 # Change Timezone
 ARG TIME_ZONE=UTC

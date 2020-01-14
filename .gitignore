@@ -2,5 +2,4 @@
 .DS_Store
 /.idea
 !.gitignore
-docker-compose.yml
-./build/php72/add_hosts.sh
+/build/php/add_hosts.sh

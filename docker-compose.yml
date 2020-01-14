@@ -1,4 +1,4 @@
-version: '2.2'
+version: '3.1'
 
 services:
 
@@ -10,53 +10,40 @@ services:
       - "80:80"
       - "443:443"
     volumes:
-      - /develop/php/:/var/www/html/
-      - /develop/html/:/var/www/html/html/
+      - ~/develop/php/:/var/www/html/
+      - ~/develop/html/:/var/www/html/html/
       - ./conf/nginx/conf.d:/etc/nginx/conf.d
       - ./conf/nginx/nginx.conf:/etc/nginx/nginx.conf
       - ./logs/nginx:/var/log/nginx
     links:
-      - php72:fpm72
-      - php56:fpm56
+      - php:php-fpm
 
-  php72:
-      build: ./build/php72
-      container_name: dnmp_php72
+  php:
+      build: ./build/php
+      container_name: dnmp_php
       expose:
         - "9000"
       volumes:
-        - /develop/php/:/var/www/html/
-        - /develop/html/:/var/www/html/html/
-        - ./conf/php72/php.ini:/usr/local/etc/php/php.ini:ro
-        - ./conf/php72/php-fpm.d/www.conf:/usr/local/etc/php-fpm.d/www.conf
-        - ./logs/php72/:/var/log/php-fpm/:rw
+        - ~/develop/php/:/var/www/html/
+        - ~/develop/html/:/var/www/html/html/
+        - ./conf/php/php.ini:/usr/local/etc/php/php.ini:ro
+        - ./conf/php/php-fpm.d/www.conf:/usr/local/etc/php-fpm.d/www.conf
+        - ./logs/php/:/var/log/php-fpm/:rw
       links:
-        - "mysql57"
+        - "mysql"
         - "redis"
+        - "mongo"
 
-  php56:
-    build: ./build/php56
-    container_name: dnmp_php56
-    expose:
-      - "9000"
-    volumes:
-      - /develop/php/:/var/www/html/
-      - ./conf/php56/php.ini:/usr/local/php56/etc/php.ini:rw
-      - ./conf/php56/php-fpm.conf:/usr/local/php56/etc/php-fpm.conf:rw
-      - ./logs/php56/:/var/log/php-fpm/:rw
-    links:
-      - "mysql57"
-      - "redis"
-
-  mysql57:
+  mysql:
     build:
       context: ./build/mysql
-    container_name: dnmp_mysql57
+    container_name: dnmp_mysql
     ports:
       - "3306:3306"
     volumes:
       - ./data/mysql:/var/lib/mysql
-      - ./conf/mysql/my.cnf:/etc/mysql/conf.d/my.cnf
+      - ./conf/mysql/my.cnf:/etc/mysql/my.cnf
+      - ./conf/mysql/conf.d/mysql.cnf:/etc/mysql/conf.d/mysql.cnf
       - ./logs/mysql:/var/log/mysql
     environment:
       MYSQL_ROOT_PASSWORD: Root@123
@@ -70,3 +57,16 @@ services:
     volumes:
       - ./conf/redis/redis.conf:/usr/local/etc/redis/redis.conf
       - ./logs/redis:/var/log/redis
+
+  mongo:
+    build:
+      context: ./build/mongo
+    container_name: dnmp_mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./data/mongo/db:/data/db
+      - ./data/mongo/configdb:/data/configdb
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: Root@123

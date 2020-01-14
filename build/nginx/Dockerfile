@@ -1,4 +1,4 @@
-FROM nginx:1.12.2
+FROM nginx:1.16.1
 
 # Change Timezone
 ARG TIME_ZONE=UTC
