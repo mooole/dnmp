@@ -15,7 +15,7 @@ COPY sources.list /etc/apt/sources.list
 # Install Base Components
 RUN apt-get update && apt-get install -y --no-install-recommends \
         libpng-dev libjpeg-dev libfreetype6-dev libjpeg62-turbo-dev \
-        ntpdate cron unzip \
+        ntpdate cron unzip vim \
     && apt-get install -y libicu-dev \
     && apt-get install -y libxml2-dev \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
