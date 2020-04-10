@@ -32,6 +32,15 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && docker-php-ext-install xmlrpc \
     && docker-php-ext-install opcache
 
+# Add zip extension
+RUN apt-get install -y --no-install-recommends libzip-dev \
+    && rm -r /var/lib/apt/lists/* \
+    && docker-php-ext-install -j$(nproc) zip
+
+# Add swoole extension
+RUN pecl install swoole-4.4.8 \
+    && docker-php-ext-enable swoole
+
 RUN pecl install -o -f redis \
     && rm -rf /tmp/pear \
     && docker-php-ext-enable redis
