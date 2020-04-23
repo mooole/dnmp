@@ -51,3 +51,6 @@ RUN chmod +x /usr/bin/composer
 
 # Changee Aliyun Composer Mirrors
 RUN composer config -g repo.packagist composer https://mirrors.aliyun.com/composer/
+
+# Add swoole loader
+COPY swoole_loader.so /usr/local/lib/php/extensions/no-debug-non-zts-20190902/
