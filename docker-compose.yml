@@ -17,6 +17,7 @@ services:
       - ./logs/nginx:/var/log/nginx
     links:
       - php:php-fpm
+      - php73:php73-fpm
 
   php:
       build: ./build/php
@@ -33,6 +34,22 @@ services:
         - "mysql"
         - "redis"
         - "mongo"
+
+  php73:
+    build: ./build/php73
+    container_name: dnmp_php73
+    expose:
+      - "9000"
+    volumes:
+      - ~/develop/php/:/var/www/html/
+      - ~/develop/html/:/var/www/html/html/
+      - ./conf/php73/php.ini:/usr/local/etc/php/php.ini:ro
+      - ./conf/php73/php-fpm.d/www.conf:/usr/local/etc/php-fpm.d/www.conf
+      - ./logs/php73/:/var/log/php-fpm/:rw
+    links:
+      - "mysql"
+      - "redis"
+      - "mongo"
 
   mysql:
     build:
