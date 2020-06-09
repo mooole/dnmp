@@ -30,6 +30,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && docker-php-ext-install sockets \
     && docker-php-ext-install sysvsem \
     && docker-php-ext-install xmlrpc \
+    && docker-php-ext-install bcmath \
     && docker-php-ext-install opcache
 
 # Add zip extension
