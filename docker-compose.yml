@@ -34,6 +34,7 @@ services:
         - "mysql"
         - "redis"
         - "mongo"
+        - es:elasticsearch
 
   php73:
     build: ./build/php73
@@ -87,3 +88,25 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: Root@123
+
+  es:
+    image: elasticsearch:7.9.2
+    container_name: dnmp_es
+    ports:
+      - "9200:9200"
+    volumes:
+      - ./data/elasticsearch/data:/usr/share/elasticsearch/data
+    environment:
+      - discovery.type=single-node
+
+  kibana:
+    image: kibana:7.9.2
+    container_name: dnmp_kibana
+    ports:
+      - "5601:5601"
+    volumes:
+      - ./conf/kibana/kibana.yml:/usr/share/kibana/config/kibana.yml:ro
+    environment:
+      ELASTICSEARCH_HOSTS: http://elasticsearch:9200
+    links:
+      - es:elasticsearch
