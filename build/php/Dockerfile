@@ -18,6 +18,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         ntpdate cron unzip vim \
     && apt-get install -y libicu-dev \
     && apt-get install -y libxml2-dev \
+    && apt-get install -y libcurl4-openssl-dev pkg-config libssl-dev \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install -j$(nproc) gd \
     && docker-php-ext-install intl \
@@ -55,3 +56,10 @@ RUN composer config -g repo.packagist composer https://mirrors.aliyun.com/compos
 
 # Add swoole loader
 COPY swoole_loader.so /usr/local/lib/php/extensions/no-debug-non-zts-20190902/
+
+#RUN pecl install xdebug && docker-php-ext-enable xdebug
+
+# Add mongodb extension
+RUN pecl install -o -f mongodb \
+    && rm -rf /tmp/pear \
+    && docker-php-ext-enable mongodb
